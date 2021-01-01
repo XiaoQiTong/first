@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ran.mapper.StudentMapper">
+	<!-- com.ran.entity.Student -->
+	<resultMap type="Student" id="BaseResultMap">
+		<constructor>
+			<idArg column="s_no" javaType="java.lang.Long" jdbcType="BIGINT"/>
+			<arg column="s_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<arg column="s_age" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<arg column="s_address" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		</constructor>
+	</resultMap>
+	<sql id="Base_Column_List">
+	    s_no, s_name, s_age, s_address
+	</sql>
+  
+	<select id="queryById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select
+			<include refid="Base_Column_List"></include>
+		from student where s_no=${id}
+	</select>
+	<select id="queryAll" resultMap="BaseResultMap">
+		select * from student
+	</select>
+	<insert id="addStudent" parameterType="Student" >
+		insert into student values(${sNo}, #{sName}, ${sAge}, #{sAddress})
+	</insert>
+	<update id="update" parameterType="com.ran.entity.Student">
+		update student set s_age=${sAge} where s_name = #{sName}
+	</update>
+</mapper>

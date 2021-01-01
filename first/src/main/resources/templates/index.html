@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" th:src="@{../static/js/jquery-1.8.3.js}"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+强强强强强强强强强强
+<a href="/login">登录页面</a>
+
+<table>
+	<tr th:each="Student,stu : ${list}">
+		<td ></td>
+	</tr>
+
+</table>
+<button type="button">获取</button>
+<div id="app">
+	{{message}}
+</div>
+<div id="page">
+	{{list}}
+</div>
+
+<ul id="student" class="demo">
+  <li v-for="value in object">
+    {{ value }}
+  </li>
+</ul>
+
+<input type="text" id="username" name="username"><br/>
+	<input type="password" id="password" name="password"><br/>
+	<!-- <button type="button">登录</button> -->
+<script type="text/javascript">
+	var app = new Vue({
+		el: "#app",
+		data: {
+			message: 'shabi'
+		}
+	});
+	var page = new Vue({
+		el: "#page",
+		data: {
+			list: 'shabi'
+		}
+	});
+	new Vue({
+		  el: '#student',
+		  data: {
+		    object: {
+		      title: 'How to do lists in Vue',
+		      author: 'Jane Doe',
+		      publishedAt: '2016-04-10'
+		    }
+		  }
+		});
+	
+	$(document).ready(function(){
+		/*
+		$("button").click(function(){
+			var username = $("[name='username']").val();
+			var password = $("[name='password']").val();
+			$.ajax({
+				url: "/login",
+				type:"post",
+				data: {"name":username,"pwd":password},
+				success:function(AjaxResult){
+					alert(AjaxResult.msg);
+					if(AjaxResult.code == 200){
+						location.href = '/StudentController/view';
+					}
+				},
+				error:function(){
+					alert("系统异常");
+				}
+			});
+		}); */
+		$("button").click(function(){
+			$.ajax({
+				url: "/list",
+				type:"post",
+				success:function(pageInfo){
+					page.list=pageInfo.list.toString();
+				},
+				error:function(){
+					alert("系统异常");
+				}
+			});
+		});
+	})
+</script>
+</body>
+</html>
